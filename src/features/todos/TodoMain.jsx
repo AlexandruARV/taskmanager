@@ -2,7 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { readTasks } from "../../services/apiTasks";
 import Spinner from "../../ui/Spinner";
 import { useState } from "react";
-import { Form } from "react-hook-form";
+import CreateNewTask from "../../ui/CreateNewTask";
+import ShowingButtons from "../../ui/ShowingButtons";
 
 function TodoMain() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,14 +25,19 @@ function TodoMain() {
         >
           New
         </button>
-        {isOpen && <Form />}
+        {isOpen && <CreateNewTask />}
 
         <ul className="mt-6 flex flex-col gap-2">
-          {tasks.map((task) => (
-            <li className="w-full bg-yellow-900 p-2 rounded-md">
-              {task.description}
-            </li>
-          ))}
+          {tasks
+            .map((task) => (
+              <li
+                key={task.id}
+                className="w-full bg-yellow-900 pt-2  rounded-md "
+              >
+                <ShowingButtons task={task} />
+              </li>
+            ))
+            .reverse()}
         </ul>
       </li>
       <li className="text-center  p-3 w-full border-r border-stone-500">

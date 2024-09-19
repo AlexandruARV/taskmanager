@@ -7,3 +7,15 @@ export async function readTasks() {
 
   return tasks;
 }
+
+export async function createTask(newTask) {
+  const { data, error } = await supabase
+    .from("tasks")
+    .insert([{ ...newTask }])
+    .select();
+
+  console.log(newTask);
+  if (error) throw new Error("Something went wrong");
+
+  return data;
+}
